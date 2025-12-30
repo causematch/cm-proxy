@@ -316,7 +316,6 @@ class BidirectionalHandler(UnidirectionalHandler):
         result = {
             "statusCode": response.status_code,
             "headers": dict(response.headers),
-            # "body": base64.b64encode(response.content).decode("ascii"),
             "body": response.text,
             "isBase64Encoded": False,
         }
