@@ -117,7 +117,7 @@ wheels = [
 ]
 
 [[package]]
-name = "awscm-proxy"
+name = "cm-proxy"
 source = { editable = "." }
 dependencies = [
     { name = "boto3" },

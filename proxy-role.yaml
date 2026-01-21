@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: managed policy and permissions boundary for awscm-proxy
+Description: managed policy and permissions boundary for cm-proxy
 
 # deployment requires CAPABILITY_NAMED_IAM
 
@@ -7,8 +7,8 @@ Resources:
   AwscmProxyPermissionsBoundary:
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      Description: Permissions boundary for awscm-proxy cloud resources
-      ManagedPolicyName: awscm-proxy-permissions-boundary
+      Description: Permissions boundary for cm-proxy cloud resources
+      ManagedPolicyName: cm-proxy-permissions-boundary
       PolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -72,7 +72,7 @@ Resources:
                   - 'iam:PutRolePolicy'
                   - 'iam:DeleteRolePolicy'
                 Resource: 
-                  - !Sub 'arn:aws:iam::${AWS::AccountId}:role/awscm-proxy/*'
+                  - !Sub 'arn:aws:iam::${AWS::AccountId}:role/cm-proxy/*'
                 Condition:
                   StringEquals:
                     'iam:PermissionsBoundary': !Ref AwscmProxyPermissionsBoundary
@@ -80,7 +80,7 @@ Resources:
                 Action:
                   - 'iam:PassRole'
                 Resource: 
-                  - !Sub 'arn:aws:iam::${AWS::AccountId}:role/awscm-proxy/*'
+                  - !Sub 'arn:aws:iam::${AWS::AccountId}:role/cm-proxy/*'
                 Condition:
                   ArnLike:
                     "iam:AssociatedResourceARN":
@@ -94,7 +94,7 @@ Resources:
                   - 'iam:GetRolePolicy'
                   - 'iam:ListRolePolicies'
                 Resource: 
-                  - !Sub 'arn:aws:iam::${AWS::AccountId}:role/awscm-proxy/*'
+                  - !Sub 'arn:aws:iam::${AWS::AccountId}:role/cm-proxy/*'
               - Effect: Allow
                 Action:
                   - 'iam:GetPolicy'
@@ -161,8 +161,8 @@ Resources:
   AwscmProxyPolicy:
     Type: AWS::IAM::ManagedPolicy
     Properties:
-      Description: Permissions for awscm-proxy
-      ManagedPolicyName: awscm-proxy-policy
+      Description: Permissions for cm-proxy
+      ManagedPolicyName: cm-proxy-policy
       PolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -178,7 +178,7 @@ Resources:
               - 'cloudformation:DeleteStack'
               - 'cloudformation:DescribeStacks'
             Resource: 
-              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/awscm-proxy*'
+              - !Sub 'arn:aws:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/cm-proxy*'
           - Effect: Allow
             Action:
               - 'iam:PassRole'
@@ -200,7 +200,7 @@ Resources:
 
 Outputs:
   AwscmProxyPolicy:
-    Description: Arn of managed policy for awscm-proxy
+    Description: Arn of managed policy for cm-proxy
     Value: !Ref AwscmProxyPolicy
     Export:
-      Name: awscm-proxy-managed-policy-arn
+      Name: cm-proxy-managed-policy-arn

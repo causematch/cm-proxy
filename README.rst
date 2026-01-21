@@ -1,13 +1,9 @@
-awscm-proxy
+cm-proxy
 ============
-
-.. image:: https://raw.githubusercontent.com/causematch/awscm-proxy/refs/heads/master/docs/images/logo.svg
-   :alt: awscm-proxy logo
-   :align: left
 
 .. home-start
 
-awscm-proxy (pronounced "awesome proxy") provides a quick, cheap, secure,
+cm-proxy provides a quick, cheap, secure,
 and straightforward serverless localhost proxy, useful for receiving
 webhooks from third-party services on a local development server.  It is an
 inexpensive alternative to services such as ngrok_ or localtunnel_.
@@ -54,13 +50,13 @@ Installation
 """""""""""""
 ::
 
-    pip install awscm-proxy
+    pip install cm-proxy
 
 Quickstart
 """""""""""
 ::
 
-    awscm-proxy <local-endpoint>
+    cm-proxy <local-endpoint>
 
 
 .. _CauseMatch: https://www.causematch.com
@@ -70,5 +66,5 @@ Quickstart
 
 .. home-end
 
-.. _security: https://github.com/causematch/awscm-proxy/blob/master/docs/security.rst
+.. _security: https://github.com/causematch/cm-proxy/blob/master/docs/security.rst
 

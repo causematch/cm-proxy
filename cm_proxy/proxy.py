@@ -19,7 +19,7 @@ from . import __version__
 def main(args):
     options = parse_args(args)
     if options.version:
-        print(f"awscm-proxy v{__version__}")
+        print(f"cm-proxy v{__version__}")
         return
 
     proxy = AwscmProxy(options)
@@ -45,7 +45,7 @@ def parse_args(args):
 
 def get_parser():
     parser = argparse.ArgumentParser(
-        prog="awscm-proxy",
+        prog="cm-proxy",
         description="A quick, cheap, secure, and straightforward serverless localhost proxy",
     )
     parser.add_argument(
@@ -72,8 +72,8 @@ def get_parser():
         "--stack-name-suffix",
         help="""
         Suffix of CloudFormation stack name to create/reuse.
-        If specified, the stack name will be awscm-proxy-<suffix>.
-        If not specified, the stack name will be awscm-proxy-<uni|bidi>.
+        If specified, the stack name will be cm-proxy-<suffix>.
+        If not specified, the stack name will be cm-proxy-<uni|bidi>.
         """,
     )
     parser.add_argument(
@@ -92,7 +92,7 @@ def get_parser():
     parser.add_argument(
         "-v",
         "--version",
-        help="Output awscm-proxy version and exit",
+        help="Output cm-proxy version and exit",
         action="store_true",
     )
     parser.add_argument(
@@ -100,7 +100,7 @@ def get_parser():
         nargs="?",
         help="""
         Fully qualified local HTTP endpoint (e.g., http://localhost:8000).
-        If not specified, awscm-proxy will create the AWS resources and exit.
+        If not specified, cm-proxy will create the AWS resources and exit.
         """,
     )
     return parser
@@ -200,7 +200,7 @@ class AwscmProxy:
     def get_stack_name(self):
         direction = "bidi" if self.options.bidirectional else "uni"
         suffix = self.options.stack_name_suffix or direction
-        return "awscm-proxy-" + suffix
+        return "cm-proxy-" + suffix
 
     def check_stack_exists(self):
         try:

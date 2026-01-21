@@ -1,7 +1,7 @@
 Authors
 --------
 
-awscm-proxy was conceived by Aryeh Leib Taurog `@altaurog <https://github.com/altaurog>`_
+cm-proxy was conceived by Aryeh Leib Taurog `@altaurog <https://github.com/altaurog>`_
 and written in ensemble with
 
 * Paritosh Gupta `@paritoshcm <https://github.com/paritoshcm>`_

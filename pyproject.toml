@@ -1,5 +1,5 @@
 [project]
-name = "awscm-proxy"
+name = "cm-proxy"
 dynamic = ["version"]
 description = "A cheap, secure, and straightforward serverless localhost proxy"
 readme = "README.rst"
@@ -24,12 +24,12 @@ authors = [
 ]
 
 [project.urls]
-documentation = "https://awscm-proxy.readthedocs.io"
-repository = "https://github.com/causematch/awscm-proxy"
-issues = "https://github.com/causematch/awscm-proxy/issues"
+documentation = "https://cm-proxy.readthedocs.io"
+repository = "https://github.com/causematch/cm-proxy"
+issues = "https://github.com/causematch/cm-proxy/issues"
 
 [project.scripts]
-awscm-proxy = "awscm_proxy.proxy:entrypoint"
+cm-proxy = "cm_proxy.proxy:entrypoint"
 
 [build-system]
 requires = ["flit_core >=3.11,<5"]

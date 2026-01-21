@@ -1,7 +1,7 @@
 How it Works
 =============
 
-It is very simple.  When first invoked, awscm-proxy creates AWS serverless
+It is very simple.  When first invoked, cm-proxy creates AWS serverless
 resources to receive and enqueue external requests.  To proxy these
 requests, it waits for messages in the queue and forwards them to the
 appropriate local endpoint.

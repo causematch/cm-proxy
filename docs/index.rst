@@ -1,4 +1,4 @@
-awscm-proxy
+cm-proxy
 ============
 
 .. include:: ../README.rst

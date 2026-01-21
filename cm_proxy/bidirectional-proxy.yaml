@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: 'awscm-proxy: bidirectional serverless proxy'
+Description: 'cm-proxy: bidirectional serverless proxy'
 
 
 Parameters:
@@ -15,7 +15,7 @@ Resources:
   StateMachineRole:
     Type: AWS::IAM::Role
     Properties:
-      Path: /awscm-proxy/bidi/
+      Path: /cm-proxy/bidi/
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -42,7 +42,7 @@ Resources:
   LambdaRole:
     Type: AWS::IAM::Role
     Properties:
-      Path: /awscm-proxy/bidi/
+      Path: /cm-proxy/bidi/
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:

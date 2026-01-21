@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: pypi
-      url: https://pypi.org/p/awscm-proxy
+      url: https://pypi.org/p/cm-proxy
     permissions:
       id-token: write  # MANDATORY for OIDC
       contents: read   # Required to checkout code
