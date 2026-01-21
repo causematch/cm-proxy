@@ -1,6 +1,12 @@
 Changelog
 ------------
 
+0.2.2
+'''''
+21 Jan, 2026
+
+Re-release with updated name
+
 0.2.1
 '''''
 30 Dec, 2025
