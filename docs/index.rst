@@ -14,6 +14,7 @@ cm-proxy
    use
    how-it-works
    security
+   cost
    changelog
    authors
    license
