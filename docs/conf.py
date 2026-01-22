@@ -6,7 +6,7 @@ os.environ["COLUMNS"] = "65"
 project = "cm-proxy"
 copyright = "2025-2026, CauseMatch Israel Ltd <foss@causematch.com>"
 author = "Aryeh Leib Taurog, Evgeni Zabus, Paritosh Gupta, and Geva Or"
-version = "0.2.2"
+version = "0.2.3"
 release = version
 
 master_doc = "index"
