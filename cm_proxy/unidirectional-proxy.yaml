@@ -38,16 +38,16 @@ Resources:
                   - sqs:SendMessage
                   - sqs:GetQueueUrl
                   - sqs:GetQueueAttributes
-                Resource: !GetAtt AwscmProxyRequestQueue.Arn
+                Resource: !GetAtt CMProxyRequestQueue.Arn
 
-  AwscmProxyRequestQueue:
+  CMProxyRequestQueue:
     Type: AWS::SQS::Queue
 
   LambdaInvokePermission:
     Type: AWS::Lambda::Permission
     Properties:
       Action: lambda:InvokeFunction
-      FunctionName: !Ref AwscmProxyFunction
+      FunctionName: !Ref CMProxyFunction
       InvokedViaFunctionUrl: true
       Principal: "*"
 
@@ -55,11 +55,11 @@ Resources:
     Type: AWS::Lambda::Permission
     Properties:
       Action: lambda:InvokeFunctionUrl
-      FunctionName: !Ref AwscmProxyFunction
+      FunctionName: !Ref CMProxyFunction
       FunctionUrlAuthType: NONE
       Principal: "*"
 
-  AwscmProxyFunction:
+  CMProxyFunction:
     Type: AWS::Lambda::Function
     Properties:
       Code:
@@ -70,7 +70,7 @@ Resources:
 
           def handler(event, context):
             res = sqs.send_message(
-              QueueUrl="${AwscmProxyRequestQueue.QueueUrl}",
+              QueueUrl="${CMProxyRequestQueue.QueueUrl}",
               MessageBody=json.dumps({"Input": event}),
             )
             return {"statusCode": 200, "body": "{\"status\": \"ok\"}"}
@@ -80,17 +80,17 @@ Resources:
       Timeout: 30
       Role: !GetAtt LambdaRole.Arn
 
-  AwscmProxyUrl:
+  CMProxyUrl:
     Type: AWS::Lambda::Url
     Properties:
       AuthType: NONE
-      TargetFunctionArn: !GetAtt AwscmProxyFunction.Arn
+      TargetFunctionArn: !GetAtt CMProxyFunction.Arn
 
 Outputs:
   Endpoint:
     Description: 'Public URL of proxy'
-    Value: !GetAtt AwscmProxyUrl.FunctionUrl
+    Value: !GetAtt CMProxyUrl.FunctionUrl
 
   QueueUrl:
     Description: 'Request Queue URL'
-    Value: !Ref AwscmProxyRequestQueue
+    Value: !Ref CMProxyRequestQueue

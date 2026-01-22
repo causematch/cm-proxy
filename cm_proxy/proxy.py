@@ -22,7 +22,7 @@ def main(args):
         print(f"cm-proxy v{__version__}")
         return
 
-    proxy = AwscmProxy(options)
+    proxy = CMProxy(options)
     if options.delete_stack:
         atexit.register(proxy.cleanup)
 
@@ -106,7 +106,7 @@ def get_parser():
     return parser
 
 
-class AwscmProxy:
+class CMProxy:
     def __init__(self, options):
         self.options = options
         self.stack_name = self.get_stack_name()

@@ -4,7 +4,7 @@ Description: managed policy and permissions boundary for cm-proxy
 # deployment requires CAPABILITY_NAMED_IAM
 
 Resources:
-  AwscmProxyPermissionsBoundary:
+  CMProxyPermissionsBoundary:
     Type: AWS::IAM::ManagedPolicy
     Properties:
       Description: Permissions boundary for cm-proxy cloud resources
@@ -17,34 +17,34 @@ Resources:
               - sqs:SendMessage
               - sqs:GetQueueUrl
               - sqs:GetQueueAttributes
-            Resource: !Sub "arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:*-AwscmProxyRequestQueue-*"
+            Resource: !Sub "arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:*-CMProxyRequestQueue-*"
           - Effect: Allow
             Action:
               - states:StartExecution
-            Resource: !Sub "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:AwscmProxyStateMachine-*"
+            Resource: !Sub "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:CMProxyStateMachine-*"
           - Effect: Allow
             Action:
               - states:DescribeExecution
-            Resource: !Sub "arn:aws:states:${AWS::Region}:${AWS::AccountId}:execution:AwscmProxyStateMachine-*:*"
+            Resource: !Sub "arn:aws:states:${AWS::Region}:${AWS::AccountId}:execution:CMProxyStateMachine-*:*"
           - Effect: Allow
             Action:
               - logs:CreateLogGroup
-            Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*-AwscmProxyFunction-*"
+            Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*-CMProxyFunction-*"
           - Effect: Allow
             Action:
               - logs:CreateLogStream
               - logs:PutLogEvents
-            Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*-AwscmProxyFunction-*:log-stream:*"
+            Resource: !Sub "arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*-CMProxyFunction-*:log-stream:*"
 
-  AwscmProxyPermissionsBoundaryParameter:
+  CMProxyPermissionsBoundaryParameter:
     Type: AWS::SSM::Parameter
     Properties:
       Description: Arn of permissions boundary to use when creating roles
       Name: /cm-proxy/permissions-boundary
       Type: String
-      Value: !Ref AwscmProxyPermissionsBoundary
+      Value: !Ref CMProxyPermissionsBoundary
 
-  AwscmProxyCloudformationServiceRole:
+  CMProxyCloudformationServiceRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
@@ -75,7 +75,7 @@ Resources:
                   - !Sub 'arn:aws:iam::${AWS::AccountId}:role/cm-proxy/*'
                 Condition:
                   StringEquals:
-                    'iam:PermissionsBoundary': !Ref AwscmProxyPermissionsBoundary
+                    'iam:PermissionsBoundary': !Ref CMProxyPermissionsBoundary
               - Effect: Allow
                 Action:
                   - 'iam:PassRole'
@@ -84,8 +84,8 @@ Resources:
                 Condition:
                   ArnLike:
                     "iam:AssociatedResourceARN":
-                      - !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*-AwscmProxyFunction-*'
-                      - !Sub "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:AwscmProxyStateMachine-*"
+                      - !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*-CMProxyFunction-*'
+                      - !Sub "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:CMProxyStateMachine-*"
               - Effect: Allow
                 Action:
                   - 'iam:TagRole'
@@ -119,7 +119,7 @@ Resources:
                   - 'lambda:DeleteFunctionUrlConfig'
                   - 'lambda:UpdateFunctionUrlConfig'
                   - 'lambda:GetFunctionUrlConfig'
-                Resource: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*-AwscmProxyFunction-*'
+                Resource: !Sub 'arn:aws:lambda:${AWS::Region}:${AWS::AccountId}:function:*-CMProxyFunction-*'
               - Effect: Allow
                 Action:
                   - 'sqs:CreateQueue'
@@ -130,7 +130,7 @@ Resources:
                   - 'sqs:ListQueueTags'
                   - 'sqs:TagQueue'
                   - 'sqs:UntagQueue'
-                Resource: !Sub "arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:*-AwscmProxyRequestQueue-*"
+                Resource: !Sub "arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:*-CMProxyRequestQueue-*"
               - Effect: Allow
                 Action:
                   - 'states:CreateStateMachine'
@@ -140,7 +140,7 @@ Resources:
                   - 'states:ListTagsForResource'
                   - 'states:TagResource'
                   - 'states:UntagResource'
-                Resource: !Sub "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:AwscmProxyStateMachine-*"
+                Resource: !Sub "arn:aws:states:${AWS::Region}:${AWS::AccountId}:stateMachine:CMProxyStateMachine-*"
               - Effect: Allow
                 Action:
                   - 'logs:CreateLogGroup'
@@ -148,17 +148,17 @@ Resources:
                   - 'logs:DescribeLogGroups'
                   - 'logs:PutRetentionPolicy'
                   - 'logs:DeleteRetentionPolicy'
-                Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*-AwscmProxyFunction-*'
+                Resource: !Sub 'arn:aws:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*-CMProxyFunction-*'
 
-  AwscmProxyCloudformationServiceRoleParameter:
+  CMProxyCloudformationServiceRoleParameter:
     Type: AWS::SSM::Parameter
     Properties:
       Description: Arn of service role to use with cloudformation
       Name: /cm-proxy/cloudformation-service-role
       Type: String
-      Value: !GetAtt AwscmProxyCloudformationServiceRole.Arn
+      Value: !GetAtt CMProxyCloudformationServiceRole.Arn
 
-  AwscmProxyPolicy:
+  CMProxyPolicy:
     Type: AWS::IAM::ManagedPolicy
     Properties:
       Description: Permissions for cm-proxy
@@ -169,8 +169,8 @@ Resources:
           - Effect: Allow
             Action: 'ssm:GetParameters'
             Resource:
-              - !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter${AwscmProxyPermissionsBoundaryParameter}'
-              - !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter${AwscmProxyCloudformationServiceRoleParameter}'
+              - !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter${CMProxyPermissionsBoundaryParameter}'
+              - !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter${CMProxyCloudformationServiceRoleParameter}'
           - Effect: Allow
             Action:
               - 'cloudformation:CreateStack'
@@ -182,7 +182,7 @@ Resources:
           - Effect: Allow
             Action:
               - 'iam:PassRole'
-            Resource: !GetAtt AwscmProxyCloudformationServiceRole.Arn
+            Resource: !GetAtt CMProxyCloudformationServiceRole.Arn
             Condition:
               StringEquals:
                 'iam:PassedToService': 'cloudformation.amazonaws.com'
@@ -192,15 +192,15 @@ Resources:
               - sqs:DeleteMessage
               - sqs:GetQueueUrl
               - sqs:GetQueueAttributes
-            Resource: !Sub "arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:*-AwscmProxyRequestQueue-*"
+            Resource: !Sub "arn:aws:sqs:${AWS::Region}:${AWS::AccountId}:*-CMProxyRequestQueue-*"
           - Effect: Allow
             Action:
               - states:SendTaskSuccess
             Resource: "*"
 
 Outputs:
-  AwscmProxyPolicy:
+  CMProxyPolicy:
     Description: Arn of managed policy for cm-proxy
-    Value: !Ref AwscmProxyPolicy
+    Value: !Ref CMProxyPolicy
     Export:
       Name: cm-proxy-managed-policy-arn
