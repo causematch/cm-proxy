@@ -1,6 +1,12 @@
 Changelog
 ------------
 
+0.2.4
+'''''
+3 Jun, 2026
+
+* Strip hop-by-hop response headers in bidirectional proxy (fixes Step Functions HTTP Invoke chunked-encoding timeout)
+
 0.2.3
 '''''
 22 Jan, 2026
