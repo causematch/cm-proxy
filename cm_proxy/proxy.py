@@ -304,6 +304,26 @@ class UnidirectionalHandler:
         )
 
 
+HOP_BY_HOP_HEADERS = frozenset(
+    {
+        "connection",
+        "keep-alive",
+        "proxy-authenticate",
+        "proxy-authorization",
+        "te",
+        "trailer",
+        "transfer-encoding",
+        "upgrade",
+        "content-length",
+        "content-encoding",
+    }
+)
+
+
+def filter_response_headers(headers):
+    return {k: v for k, v in headers.items() if k.lower() not in HOP_BY_HOP_HEADERS}
+
+
 class BidirectionalHandler(UnidirectionalHandler):
     def __init__(self, local_endpoint):
         super().__init__(local_endpoint)
@@ -315,7 +335,7 @@ class BidirectionalHandler(UnidirectionalHandler):
         token = message_data.get("Token")
         result = {
             "statusCode": response.status_code,
-            "headers": dict(response.headers),
+            "headers": filter_response_headers(response.headers),
             "body": response.text,
             "isBase64Encoded": False,
         }
